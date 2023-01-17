@@ -2,6 +2,7 @@ package com.example.timemanagementtool.controller;
 
 import com.example.timemanagementtool.model.Credentials;
 import com.example.timemanagementtool.model.User;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,9 @@ import com.example.timemanagementtool.service.UserService;
 
 import java.util.HashMap;
 
+@CrossOrigin
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class UserController {
         if (token.isBlank()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        HashMap<String, String> jsonToken = new HashMap<>();
+        JSONObject jsonToken = new JSONObject();
         jsonToken.put("access_token", token);
         return ResponseEntity.ok(jsonToken.toString());
     }
@@ -34,7 +36,7 @@ public class UserController {
     ResponseEntity<String> register(
             @RequestBody Credentials credentials) {
         if (userService.addUser(new User(credentials)) != null) {
-            HashMap<String, Boolean> jsonRegister = new HashMap<>();
+            JSONObject jsonRegister = new JSONObject();
             jsonRegister.put("Registration", true);
             return ResponseEntity.ok(jsonRegister.toString());
         } else {
