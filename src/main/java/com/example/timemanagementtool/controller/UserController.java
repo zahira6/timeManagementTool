@@ -51,7 +51,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } else {
             if (userService.logout(token)){
-                return ResponseEntity.ok("Logout was successful");
+                JSONObject jsonLogout = new JSONObject();
+                jsonLogout.put("Logout was successful", 200);
+                return ResponseEntity.ok(jsonLogout.toJSONString());
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }

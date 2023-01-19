@@ -14,8 +14,7 @@ public class EntryDB implements EntryDao {
 
     @Override
     public boolean saveEntry(Entry entry){
-        if (entry.getId().isEmpty()
-                || entry.getDate() == null
+        if (entry.getDate() == null
                 || entry.getProject().isEmpty()
                 || entry.getDescription().isEmpty()
                 || entry.getDuration() == 0){

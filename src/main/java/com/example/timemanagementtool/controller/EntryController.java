@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/entry")
+@RequestMapping("profile/entry")
 public class EntryController {
 
     @Autowired
