@@ -17,7 +17,7 @@ public class EntryDB implements EntryDao {
         if (entry.getDate() == null
                 || entry.getProject().isEmpty()
                 || entry.getDescription().isEmpty()
-                || entry.getDuration() == 0){
+                || entry.getDuration().isEmpty()){
             return false;
         } else {
             return entries.add(entry);
@@ -46,7 +46,7 @@ public class EntryDB implements EntryDao {
                 || entryToUpdate.getProject().isEmpty()
                 || entryToUpdate.getDescription().isEmpty()
                 || entryToUpdate.getDate() == null
-                || entryToUpdate.getDuration() == 0) {
+                || entryToUpdate.getDuration().isEmpty()) {
             return null;
         } else {
             entryToUpdate.setProject(entry.getProject());

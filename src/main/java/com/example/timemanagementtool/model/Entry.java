@@ -6,10 +6,10 @@ public class Entry {
     private String project;
     private String description;
     private Date date;
-    private long duration;
+    private String duration;
     private String id;
 
-    public Entry(String project, String description, Date date, long duration, String id){
+    public Entry(String project, String description, Date date, String duration, String id){
         this.project = project;
         this.description = description;
         this.date = date;
@@ -41,11 +41,11 @@ public class Entry {
         this.description = description;
     }
 
-    public long getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
