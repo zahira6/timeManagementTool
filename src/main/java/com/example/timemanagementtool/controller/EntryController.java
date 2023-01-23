@@ -3,6 +3,7 @@ package com.example.timemanagementtool.controller;
 
 import com.example.timemanagementtool.model.Entry;
 import com.example.timemanagementtool.service.EntryService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class EntryController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> updateEntry(
+    ResponseEntity<Entry> updateEntry(
             @RequestBody Entry entry,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
             @PathVariable String id) {
@@ -47,7 +48,7 @@ public class EntryController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } else {
             if (entryService.updateEntry(id, entry) != null){
-                return ResponseEntity.ok("Data updated successfully");
+                return ResponseEntity.ok(entry);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
@@ -58,11 +59,16 @@ public class EntryController {
     ResponseEntity<String> deleteEntry(
             @RequestBody String id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        var entryId = id.substring(6).replace("\"", "");
+        var entryId2 = entryId.substring(0, 36);
         if (token.isBlank()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } else {
-            if(entryService.deleteEntry(id)){
-                return ResponseEntity.ok("Entry deleted successfully");
+            if(entryService.deleteEntry(entryId2)){
+                entryId2 = "{\"id\":\"" + entryId2 +"}";
+                JSONObject jsonDelete = new JSONObject();
+                jsonDelete.put("Entry deleted successfully", entryId2);
+                return ResponseEntity.ok(jsonDelete.toJSONString());
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
